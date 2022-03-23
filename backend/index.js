@@ -4,26 +4,32 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
-const auth = google.auth.getClient({
-  scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+app.listen(port, () => console.log(`Listening on port ${port}`));
+
+app.get("/a", (req, res) => {
+  console.log("Success.");
+  res.status(200);
+  res.send("hi");
 });
 
-const sheets = google.sheets({ version: "v4", auth });
+app.get("/test", async (req, res) => {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: "./secrets.json",
+    scopes: "https://www.googleapis.com/auth/spreadsheets.readonly",
+  });
 
-const range = "Sheet1!A2:B3";
+  const client = await auth.getClient();
+  const sheets = google.sheets({ version: "v4", auth: client });
+  const spreadsheetID = "11TLb2eesRU5EC3N7fv6wX0ted5O2jik2T8SpM67PYm0";
+  const range = "Sheet1!A2:B3";
 
-async function getEvents() {
-  const response = await sheets.spreadsheets.values.get({
-    spreadsheetId: process.env.SHEET_ID,
+  const events = await sheets.spreadsheets.values.get({
+    auth,
+    spreadsheetID,
     range,
   });
 
-  return response;
-}
-app.listen(port, () => console.log(`Listening on port ${port}`));
-
-app.get("/test", (req, res) => {
   res.status(200);
-  res.send(getEvents());
+  res.send(events.data);
   console.log("success");
 });
