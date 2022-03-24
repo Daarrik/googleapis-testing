@@ -20,12 +20,12 @@ app.get("/test", async (req, res) => {
 
   const client = await auth.getClient();
   const sheets = google.sheets({ version: "v4", auth: client });
-  const spreadsheetID = "11TLb2eesRU5EC3N7fv6wX0ted5O2jik2T8SpM67PYm0";
+  const spreadsheetId = "11TLb2eesRU5EC3N7fv6wX0ted5O2jik2T8SpM67PYm0";
   const range = "Sheet1!A2:B3";
 
   const events = await sheets.spreadsheets.values.get({
     auth,
-    spreadsheetID,
+    spreadsheetId,
     range,
   });
 

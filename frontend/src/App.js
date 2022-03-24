@@ -8,7 +8,9 @@ const App = () => {
       .then((res) => res.text())
       .then((text) => setMessage(text));
 
-    fetch("/test").then((res) => console.log(res));
+    fetch("/test")
+      .then((res) => res.json())
+      .then((data) => setMessage(data.values));
   }, []);
 
   return (
