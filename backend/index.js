@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { google } = require("googleapis");
 
 const express = require("express");
@@ -14,13 +15,13 @@ app.get("/a", (req, res) => {
 
 app.get("/test", async (req, res) => {
   const auth = new google.auth.GoogleAuth({
-    keyFile: "./secrets.json",
+    keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
     scopes: "https://www.googleapis.com/auth/spreadsheets.readonly",
   });
 
   const client = await auth.getClient();
   const sheets = google.sheets({ version: "v4", auth: client });
-  const spreadsheetId = "11TLb2eesRU5EC3N7fv6wX0ted5O2jik2T8SpM67PYm0";
+  const spreadsheetId = process.env.SHEET_ID;
   const range = "Sheet1!A2:B3";
 
   const events = await sheets.spreadsheets.values.get({

@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 
 const App = () => {
-  const [message, setMessage] = useState();
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetch("/a")
-      .then((res) => res.text())
-      .then((text) => setMessage(text));
-
     fetch("/test")
       .then((res) => res.json())
-      .then((data) => setMessage(data.values));
+      .then((data) => setMessages(data.values));
   }, []);
 
   return (
     <div>
-      <h1>{message}</h1>
+      {messages.map((message, idx) => (
+        <div key={idx}>
+          <h1>{message[0]}</h1>
+          <h2>{message[1]}</h2>
+        </div>
+      ))}
     </div>
   );
 };
