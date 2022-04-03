@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 const App = () => {
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    fetch("/test")
-      .then((res) => res.json())
-      .then((data) => setMessages(data.values));
+  useEffect(async () => {
+    const response = await fetch("/test");
+    const { values } = await response.json();
+    setMessages(values);
   }, []);
 
   return (
