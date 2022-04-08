@@ -4,7 +4,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(async () => {
-    const response = await fetch("/test");
+    const response = await fetch("/api/events");
     const { values } = await response.json();
     setMessages(values);
   }, []);

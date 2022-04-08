@@ -1,12 +1,12 @@
 from flask import Flask
+
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
-
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
+@app.route('/api/events')
+def get_events():
   CREDENTIALS = 'secrets.json'
   SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
   SHEET_ID = '11TLb2eesRU5EC3N7fv6wX0ted5O2jik2T8SpM67PYm0'
@@ -27,5 +27,3 @@ def hello_world():
     print(values)
   except:
     print('failed')
-
-  return 'hi'
