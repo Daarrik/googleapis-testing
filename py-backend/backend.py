@@ -12,7 +12,6 @@ def get_events():
   SHEET_ID = '11TLb2eesRU5EC3N7fv6wX0ted5O2jik2T8SpM67PYm0'
   RANGE = "Sheet1!A2:B3"
 
-  creds = None
   creds = service_account.Credentials.from_service_account_file(
     CREDENTIALS, scopes=SCOPES)
 
@@ -23,7 +22,6 @@ def get_events():
     sheet = service.spreadsheets()
     result = sheet.values().get(spreadsheetId=SHEET_ID,
                                     range=RANGE).execute()
-    values = result.get('values', [])
-    print(values)
+    return result
   except:
     print('failed')
